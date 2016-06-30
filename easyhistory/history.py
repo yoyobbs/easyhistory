@@ -43,7 +43,10 @@ class History(object):
             stock_code = stock_csv[:csv_ext_index_start]
 
             csv_path = os.path.join(path, stock_csv)
-            self.market[stock_code] = Indicator(stock_code, pd.read_csv(csv_path, index_col='date'))
+            try:#如果存在空文件，会报错
+                self.market[stock_code] = Indicator(stock_code, pd.read_csv(csv_path, index_col='date'))
+            except Exception:
+                pass
 
     def __getitem__(self, item):
         return self.market[item]
